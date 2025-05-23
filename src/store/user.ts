@@ -43,11 +43,7 @@ export const useUserStore = defineStore("user", () => {
     async function clearUser() {
         user.value = null;
         try {
-            const { data } = await axios.post(
-                "/logout",
-                {},
-                { withCredentials: true }
-            );
+            await axios.post("/logout", {}, { withCredentials: true });
         } catch (error) {
             console.error("Error during logout:", error);
         }

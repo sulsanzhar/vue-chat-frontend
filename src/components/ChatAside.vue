@@ -4,20 +4,12 @@ import ChatCard from './ChatCard.vue';
 import CreateModal from './CreateModal.vue';
 import { ref, onMounted } from 'vue';
 import { useGroupStore } from '../store/group';
-import { watch } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const groupStore = useGroupStore();
 
 const isOpen = ref(false);
-
-watch(
-  () => groupStore.currentRoom,
-  (newRoom, oldRoom) => {
-    console.log('Room changed:', oldRoom, '=>', newRoom);
-    console.log('watch chat aside')
-  }, {deep: true}
-)
-
 
 onMounted(() => {
     groupStore.getGroups();
@@ -38,7 +30,7 @@ onMounted(() => {
                 :key="group.id"
                 :id="group.id"
                 :name="group.name"
-                @groupSelected="groupStore.getGroup(group.id)"
+                @groupSelected="groupStore.getGroup(group.id), router.push(`/chat/${group.id}`)"
             />
         </div>
 

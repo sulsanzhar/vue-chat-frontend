@@ -55,7 +55,6 @@ async function sendMessage() {
 onMounted(async () => {
   if (!token) return;
 
-  await groupStore.getGroup(1);
   nextTick(() => {
     scrollToBottom();
   })

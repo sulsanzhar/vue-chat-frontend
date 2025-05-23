@@ -39,35 +39,23 @@ export const useGroupStore = defineStore("group", () => {
         }
     }
 
-    // async function getGroup(id: number) {
-    //     if (id === currentRoom.value?.id) return;
-
-    //     try {
-    //         const { data } = await axios.get("/messages", {
-    //             params: { groupId: id },
-    //         });
-
-    //         currentRoom.value!.messages = data.messages;
-    //         currentRoom.value!.name = data.group.name;
-    //         currentRoom.value!.id = data.group.id;
-    //     } catch (error) {
-    //         console.error("Error fetching group:", error);
-    //     }
-    // }
-
     async function getGroup(id: number) {
         if (id === currentRoom.value?.id) return;
 
         try {
-            const { data } = await axios.get("/messages", {
+            const response = await axios.get("/messages", {
                 params: { groupId: id },
             });
 
-            currentRoom.value = {
-                id: data.group.id,
-                name: data.group.name,
-                messages: data.messages,
-            };
+            if (response.status === 200) {
+                localStorage.setItem("currentRoom", JSON.stringify(id));
+
+                currentRoom.value = {
+                    id: response.data.group.id,
+                    name: response.data.group.name,
+                    messages: response.data.messages,
+                };
+            }
         } catch (error) {
             console.error("Error fetching group:", error);
         }

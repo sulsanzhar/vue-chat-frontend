@@ -1,10 +1,8 @@
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
     id: Number,
     name: String
 });
-
-console.log("props: ", props);
 
 const emit = defineEmits(['groupSelected'])
 </script>
