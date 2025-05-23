@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import axios from "../services/api";
 import { getCookie } from "../utils/getCookies";
-import type { TMessage } from "../types";
+import type { TGroup, TMessage } from "../types";
+import { useRouter } from "vue-router";
 
 export const useGroupStore = defineStore("group", () => {
     const groups = ref<{ id: number; name: string }[]>([]);
@@ -11,13 +12,21 @@ export const useGroupStore = defineStore("group", () => {
         name: string;
         messages: TMessage[];
     } | null>(null);
-
+    const router = useRouter();
     const token = getCookie("accessToken");
 
     function pushMessage(message: TMessage) {
         if (currentRoom.value) {
             currentRoom.value.messages.push(message);
         }
+    }
+
+    async function pushGroup(group: TGroup) {
+        console.log("pushed group: ", group);
+        groups.value.push(group);
+
+        await getGroup(group.id);
+        router.push(`/chat/${group.id}`);
     }
 
     async function getGroups() {
@@ -67,5 +76,6 @@ export const useGroupStore = defineStore("group", () => {
         getGroups,
         getGroup,
         pushMessage,
+        pushGroup,
     };
 });

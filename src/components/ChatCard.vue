@@ -24,7 +24,11 @@ const emit = defineEmits(['groupSelected'])
             />
         </svg>
         <div>
-            <h2>{{ name }}</h2>
+            <h2
+                class="break-words max-w-[180px] overflow-hidden text-ellipsis whitespace-nowrap"
+            >
+                {{ name }}
+            </h2>
         </div>
         <p>20.05.25</p>
     </div>
