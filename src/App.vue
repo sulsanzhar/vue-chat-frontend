@@ -3,8 +3,7 @@ import { ref, onMounted } from "vue";
 import { router } from "./routes/router";
 import { useRoute } from "vue-router";
 import { useUserStore } from "./store/user.js";
-import Aside from "./components/Aside.vue";
-import ChatAside from "./components/ChatAside.vue";
+import AsideNav from "./components/AsideNav.vue";
 import { useGroupStore } from "./store/group";
 import './style.css';
 
@@ -27,14 +26,12 @@ onMounted(async() => {
   };
 });
 </script>
-
 <template>
-    <div class="flex h-screen overflow-hidden p-2.5">
-        <Aside />
-        <ChatAside />
+    <div class="flex h-screen overflow-hidden p-5 box-border">
+        <AsideNav />
 
-        <div class="flex-1 flex flex-col pl-5 h-full">
-            <main class="overflow-auto">
+        <div class="flex-1 flex flex-col h-full">
+            <main class="h-full overflow-auto bg-[rgb(38,40,54)] rounded-xl">
                 <router-view />
             </main>
         </div>
